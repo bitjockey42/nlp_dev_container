@@ -1,0 +1,3 @@
+docker_flags = [ '-p', '8888:8888' ]
+image = 'nlp_dev'
+variants = ['gpu']
