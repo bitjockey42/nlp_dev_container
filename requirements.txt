@@ -1,0 +1,5 @@
+jupyterlab
+pandas
+seaborn
+beakerx
+nltk
