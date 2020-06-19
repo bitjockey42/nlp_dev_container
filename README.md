@@ -23,6 +23,8 @@ python -m nltk.downloader -d /usr/local/share/nltk_data all
 tensorman save nlp_dev nlp_dev
 ```
 
+tensorman run --gpu --python3 --jupyter --root --name nlp_dev bash
+
 ### Running the container
 
 Using `tensorman` and the pre-built `nlp_dev` image:
