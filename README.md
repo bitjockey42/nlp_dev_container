@@ -8,22 +8,15 @@ Setup
 
 ### Creating the tensorman image
 
-```sh
-# Launch the container:
-tensorman run --gpu --python3 --jupyter --root --name nlp_dev bash
-
-# Inside the container:
-pip install -U pip
-pip install -r requirements.txt
-
-# Download NLTK data
-python -m nltk.downloader -d /usr/local/share/nltk_data all
-
-# In a different terminal window on the host:
-tensorman save nlp_dev nlp_dev
+```bash
+./create_image.sh
 ```
 
-tensorman run --gpu --python3 --jupyter --root --name nlp_dev bash
+Once that's completed, do this in a new window:
+
+```bash
+tensorman save nlp_dev nlp_dev
+```
 
 ### Running the container
 

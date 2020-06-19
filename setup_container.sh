@@ -14,4 +14,6 @@ echo "Downloading NLTK data..."
 python -m nltk.downloader -d /usr/local/share/nltk_data all
 echo "Download complete."
 
-echo "Done. Now save the image by going to a new terminal window in your host and running: tensorman save nlp_dev nlp_dev"
+echo "Done. To save the image, keep this shell up, then on your host computer launch a new termina window and run: tensorman save nlp_dev nlp_dev"
+
+exec $SHELL
