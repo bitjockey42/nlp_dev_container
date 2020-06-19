@@ -4,7 +4,7 @@
 Tools and notebooks for NLP
 
 Setup
----------
+-------------------
 
 ### Creating the tensorman image
 
@@ -18,7 +18,22 @@ Once that's completed, do this in a new window:
 tensorman save nlp_dev nlp_dev
 ```
 
+That should now be available as a 
+
+Usage
+------------------------------
+
 ### Running the container
+
+Once setup is complete, you can just use `tensorman run` to run a command inside the new `nlp_dev` container.
+
+To start jupyter lab inside the container:
+
+```bash
+tensorman run ./start_jupyterlab.sh
+```
+
+### Running the container manually
 
 Using `tensorman` and the pre-built `nlp_dev` image:
 
