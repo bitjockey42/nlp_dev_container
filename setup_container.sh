@@ -9,9 +9,8 @@ echo "Installing requirements..."
 pip install -r requirements.txt
 echo "Installation complete."
 
-# Download NLTK data
-echo "Downloading NLTK data..."
-python -m nltk.downloader -d /usr/local/share/nltk_data all
+echo "Downloading spacy data..."
+python -m spacy download en_core_web_lg
 echo "Download complete."
 
 echo "Done. To save the image, keep this shell up, then on your host computer launch a new termina window and run: tensorman save nlp_dev nlp_dev"

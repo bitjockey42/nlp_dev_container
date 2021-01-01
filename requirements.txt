@@ -1,5 +1,6 @@
 jupyterlab
+sklearn
 pandas
 seaborn
 beakerx
-nltk
+spacy[cuda92]
