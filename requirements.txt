@@ -4,3 +4,4 @@ pandas
 seaborn
 beakerx
 spacy[cuda92]
+gensim
