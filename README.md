@@ -25,6 +25,12 @@ Usage
 
 ### Running the container
 
+Copy the `Tensorman.toml.example` to the root of your project directory, `PROJECT_DIR`.
+
+```
+cp Tensorman.toml.example $PROJECT_DIR/Tensorman.toml
+```
+
 Once setup is complete, you can just use `tensorman run` to run a command inside the new `nlp_dev` container.
 
 To start jupyter lab inside the container:

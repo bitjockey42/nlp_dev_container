@@ -13,6 +13,6 @@ echo "Downloading spacy data..."
 python -m spacy download en_core_web_lg
 echo "Download complete."
 
-echo "Done. To save the image, keep this shell up, then on your host computer launch a new termina window and run: tensorman save nlp_dev nlp_dev"
+echo "Done. To save the image, keep this shell up, then on your host computer launch a new terminal window and run: tensorman save nlp_dev nlp_dev"
 
 exec $SHELL
