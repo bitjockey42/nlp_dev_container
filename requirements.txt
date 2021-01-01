@@ -1,7 +1,8 @@
 jupyterlab
-sklearn
+scikit-learn
 pandas
 seaborn
 beakerx
 spacy[cuda92]
 gensim
+xlrd
