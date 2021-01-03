@@ -93,3 +93,6 @@ target/
 .ipython/
 .jupyter/
 .local/
+.keras/
+.python_history
+.venv/
