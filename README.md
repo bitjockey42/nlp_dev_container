@@ -10,20 +10,28 @@ Setup
 
 Documentation:
 
-- [cuda](https://support.system76.com/articles/cuda/)
 - [Tensorman](https://support.system76.com/articles/use-tensorman/)
 
-```
-sudo apt install system76-cuda-10.2
-sudo apt install system76-cudnn-10.2
-```
-
-Set as default:
+Install dependencies:
 
 ```
-# Select cuda-10.2
-sudo update-alternatives --config cuda
+sudo apt install tensorman
+sudo apt install nvidia-container-runtime
 ```
+
+Then add yourself to the docker group:
+
+```
+sudo usermod -aG docker $USER
+```
+
+Then reboot.
+
+## Preparing to create the tensorman image
+
+### Check cuda compatibility
+
+You'll need to check what cuda version is in the image. To do so, I had 
 
 ### Creating the tensorman image
 
