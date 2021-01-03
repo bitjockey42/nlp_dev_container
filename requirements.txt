@@ -3,6 +3,6 @@ scikit-learn
 pandas
 seaborn
 beakerx
-spacy[cuda92]
+spacy[cuda102]
 gensim
 xlrd

@@ -6,6 +6,25 @@ Tools and notebooks for NLP
 Setup
 -------------------
 
+### pop os requirements
+
+Documentation:
+
+- [cuda](https://support.system76.com/articles/cuda/)
+- [Tensorman](https://support.system76.com/articles/use-tensorman/)
+
+```
+sudo apt install system76-cuda-10.2
+sudo apt install system76-cudnn-10.2
+```
+
+Set as default:
+
+```
+# Select cuda-10.2
+sudo update-alternatives --config cuda
+```
+
 ### Creating the tensorman image
 
 ```bash
