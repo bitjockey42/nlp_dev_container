@@ -96,3 +96,4 @@ target/
 .keras/
 .python_history
 .venv/
+.npm

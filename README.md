@@ -31,7 +31,7 @@ Then reboot.
 
 ### Check cuda compatibility
 
-You'll need to check what cuda version is in the image. To do so, I had 
+You'll need to check what cuda version is in the image. To do so, I had to launch a container and check the version inside the container.
 
 ### Creating the tensorman image
 

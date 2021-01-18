@@ -1,4 +1,5 @@
 jupyterlab
+jupyterlab_vim
 scikit-learn
 pandas
 seaborn
