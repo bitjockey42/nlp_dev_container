@@ -45,7 +45,7 @@ Once that's completed, do this in a new window:
 tensorman save nlp_dev nlp_dev
 ```
 
-That should now be available as a 
+That should now be available as an image.
 
 Usage
 ------------------------------
