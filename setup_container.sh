@@ -16,18 +16,18 @@ minor=$(cut -d'.' -f2 <<< $version_string)
 cuda_version="${major}${minor}"
 echo "${major}${minor}"
 
-# Update pip
-echo "Updating pip..."
-pip install -U pip
+# Update pip3
+echo "Updating pip3..."
+pip3 install --upgrade pip
 echo "Update complete."
 
 # Install required packages
 echo "Installing requirements..."
-pip install -r requirements.txt -f https://download.pytorch.org/whl/cu101/torch_stable.html
+pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cu101/torch_stable.html
 echo "Installation complete."
 
 echo "Installing spacy..."
-pip install "spacy[cuda$cuda_version]"
+pip3 install "spacy[cuda$cuda_version]"
 
 echo "Downloading spacy data..."
 python -m spacy download en_core_web_lg
