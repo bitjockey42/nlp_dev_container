@@ -4,6 +4,6 @@ scikit-learn
 pandas
 seaborn
 beakerx
-#spacy[cuda101]
 gensim
 xlrd
+# NOTE: spacy is installed separately so that the right CUDA version can be used

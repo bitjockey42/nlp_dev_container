@@ -97,3 +97,4 @@ target/
 .python_history
 .venv/
 .npm
+.config/
