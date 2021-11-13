@@ -23,7 +23,7 @@ echo "Update complete."
 
 # Install required packages
 echo "Installing requirements..."
-pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cu101/torch_stable.html
+pip3 install -r requirements.txt -f "https://download.pytorch.org/whl/cu$cuda_version/torch_stable.html"
 echo "Installation complete."
 
 echo "Installing spacy..."
