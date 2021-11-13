@@ -1,5 +1,9 @@
 jupyterlab
+jupyterlab_vim
+scikit-learn
 pandas
 seaborn
 beakerx
-nltk
+gensim
+xlrd
+# NOTE: spacy is installed separately so that the right CUDA version can be used

@@ -6,6 +6,33 @@ Tools and notebooks for NLP
 Setup
 -------------------
 
+### pop os requirements
+
+Documentation:
+
+- [Tensorman](https://support.system76.com/articles/use-tensorman/)
+
+Install dependencies:
+
+```
+sudo apt install tensorman
+sudo apt install nvidia-container-runtime
+```
+
+Then add yourself to the docker group:
+
+```
+sudo usermod -aG docker $USER
+```
+
+Then reboot.
+
+## Preparing to create the tensorman image
+
+### Check cuda compatibility
+
+You'll need to check what cuda version is in the image. To do so, I had to launch a container and check the version inside the container.
+
 ### Creating the tensorman image
 
 ```bash
@@ -18,12 +45,18 @@ Once that's completed, do this in a new window:
 tensorman save nlp_dev nlp_dev
 ```
 
-That should now be available as a 
+That should now be available as an image.
 
 Usage
 ------------------------------
 
 ### Running the container
+
+Copy the `Tensorman.toml.example` to the root of your project directory, `PROJECT_DIR`.
+
+```
+cp Tensorman.toml.example $PROJECT_DIR/Tensorman.toml
+```
 
 Once setup is complete, you can just use `tensorman run` to run a command inside the new `nlp_dev` container.
 
