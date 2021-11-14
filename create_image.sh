@@ -7,6 +7,7 @@ JUPYTER=false
 GPU=false
 TF_VERSION=2.1.0
 NAME=nlp_dev
+opts=()
 
 usage() {
     echo "Usage: ${0} --tag $TF_VERSION --jupyter --gpu"
@@ -16,7 +17,7 @@ build() {
     # Launch the container for building:
     echo "Launching container with tensorflow $TF_VERSION"
     tensorman pull $TAG
-    tensorman +$TF_VERSION run --gpu --jupyter --root --name $NAME ./setup_container.sh
+    tensorman +$TF_VERSION run ${tensorman_opts[@]} --root --name $NAME ./setup_container.sh
     echo "You can now exit the container"
 }
 
@@ -30,9 +31,11 @@ while [ "$1" != "" ]; do
     case $1 in
     -j | --jupyter)
         JUPYTER=true
+        opts+=("jupyter")
         ;;
     -g | --gpu)
         GPU=true
+        opts+=("gpu")
         ;;
     -v | --version) # tensorflow version
         shift
@@ -63,4 +66,9 @@ if [[ $JUPYTER == true ]]; then
     TAG=${TAG}-jupyter
 fi
 
-echo $TAG . $NAME
+# Build args
+for opt in "${opts[@]}"; do
+    tensorman_opts+=( --$opt )
+done
+
+build
