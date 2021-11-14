@@ -102,6 +102,7 @@ while [ "$1" != "" ]; do
 done
 
 upgrade_pip
+install_requirements
 
 if [[ $INSTALL_JUPYTERLAB_VIM == true ]]; then
     install_jupyterlab_vim
