@@ -7,7 +7,9 @@ JUPYTER=false
 GPU=false
 TF_VERSION=2.1.0
 NAME=nlp_dev
-opts=()
+SETUP=true
+opts=("root")
+scripts=("./setup_container.sh")
 
 usage() {
     cat <<USAGE
@@ -18,6 +20,7 @@ usage() {
         -t, --tensorflow-version:
         -j, --jupyter: Use jupyter lab
         -n, --name:  Name to use for the container
+        --skip-setup: Don't run setup script
 
 USAGE
     exit 1
@@ -27,7 +30,13 @@ build() {
     # Launch the container for building:
     echo "Launching container with tensorflow $TF_VERSION"
     tensorman pull $TAG
-    tensorman +$TF_VERSION run ${tensorman_opts[@]} --root --name $NAME ./setup_container.sh
+
+    if [[ $SETUP == false ]]; then
+        echo "Skip setup"
+        scripts=("bash")
+    fi
+        
+    tensorman +$TF_VERSION run ${tensorman_flags[@]} --name $NAME ${scripts[@]}
     echo "You can now exit the container"
 }
 
@@ -45,6 +54,9 @@ while [ "$1" != "" ]; do
     -g | --gpu)
         GPU=true
         opts+=("gpu")
+        ;;
+    --skip-setup)
+        SETUP=false
         ;;
     -t | --tensorflow-version) # tensorflow version
         shift
@@ -77,7 +89,7 @@ fi
 
 # Build args
 for opt in "${opts[@]}"; do
-    tensorman_opts+=( --$opt )
+    tensorman_flags+=( --$opt )
 done
 
 build
