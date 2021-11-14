@@ -30,12 +30,6 @@ build() {
     # Launch the container for building:
     echo "Launching container with tensorflow $TF_VERSION"
     tensorman pull $TAG
-
-    if [[ $SETUP == false ]]; then
-        echo "Skip setup"
-        scripts=("bash")
-    fi
-        
     tensorman +$TF_VERSION run ${tensorman_flags[@]} --name $NAME ${scripts[@]}
     echo "You can now exit the container"
 }
@@ -91,5 +85,10 @@ fi
 for opt in "${opts[@]}"; do
     tensorman_flags+=( --$opt )
 done
+
+if [[ $SETUP == false ]]; then
+    echo "Skip setup"
+    scripts=("bash")
+fi
 
 build
