@@ -1,3 +1,6 @@
+torch==1.7.1
+torchvision==0.8.2
+torchaudio==0.7.2
 jupyterlab
 jupyterlab_vim
 scikit-learn
@@ -6,4 +9,5 @@ seaborn
 beakerx
 gensim
 xlrd
+nltk
 # NOTE: spacy is installed separately so that the right CUDA version can be used
