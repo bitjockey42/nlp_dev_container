@@ -1,5 +1,4 @@
 jupyterlab
-jupyterlab_vim
 nltk
 scikit-learn
 pandas
