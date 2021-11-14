@@ -10,7 +10,17 @@ NAME=nlp_dev
 opts=()
 
 usage() {
-    echo "Usage: ${0} --tag $TF_VERSION --jupyter --gpu"
+    cat <<USAGE
+
+    Usage: $0 [-t TENSORFLOW_VERSION] [--jupyter] [--gpu] [-n CONTAINER_NAME]
+
+    Options:
+        -t, --tensorflow-version:
+        -j, --jupyter: Use jupyter lab
+        -n, --name:  Name to use for the container
+
+USAGE
+    exit 1
 }
 
 build() {
@@ -21,9 +31,8 @@ build() {
     echo "You can now exit the container"
 }
 
-# if no arguments are provided, return usage function
 if [ $# -eq 0 ]; then
-    usage # run usage function
+    usage
     exit 1
 fi
 
@@ -37,7 +46,7 @@ while [ "$1" != "" ]; do
         GPU=true
         opts+=("gpu")
         ;;
-    -v | --version) # tensorflow version
+    -t | --tensorflow-version) # tensorflow version
         shift
         TF_VERSION=$1
         ;;
