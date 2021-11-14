@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
+#
 # Script to create a docker image
 # This should be run on the host computer
-#
-# Usage: ./create_image <version-number>
-#
 ##########################################
 JUPYTER=false
 GPU=false
+TF_VERSION=2.1.0
 
 usage() {
     echo "Usage: ${0} --tag $TF_VERSION --jupyter --gpu"
@@ -15,7 +14,7 @@ usage() {
 build() {
     # Launch the container for building:
     echo "Launching container with tensorflow $TF_VERSION"
-    tensorman pull $TF_VERSION-gpu-jupyter
+    tensorman pull $TAG
     tensorman +$TF_VERSION run --gpu --jupyter --root --name nlp_dev ./setup_container.sh
     echo "You can now exit the container"
 }
@@ -36,7 +35,7 @@ while [ "$1" != "" ]; do
         ;;
     -v | --version) # tensorflow version
         shift
-        TAG=$1
+        TF_VERSION=$1
         ;;
     -h | --help)
         usage
@@ -49,10 +48,7 @@ while [ "$1" != "" ]; do
     shift
 done
 
-if [[ "$TAG" == "" ]]; then
-    echo "You must provide a version for tensorflow";
-    exit 1;
-fi
+TAG=$TF_VERSION
 
 if [[ $GPU == true ]]; then
     TAG=${TAG}-gpu
