@@ -29,9 +29,9 @@ Then reboot.
 
 ## Usage
 
-### Starting the container
+### Starting the container (Host)
 
-For a container with GPU access, Python 3, and Jupyter lab:
+On the host machine, start a container with GPU access, Python 3, and Jupyter lab:
 
 ```bash
 ./setup.sh -j -g -py3 -n nlp_dev
