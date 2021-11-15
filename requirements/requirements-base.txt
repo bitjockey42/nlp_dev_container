@@ -6,4 +6,5 @@ seaborn
 beakerx
 gensim
 xlrd
+ipdb
 # NOTE: spacy is installed separately so that the right CUDA version can be used

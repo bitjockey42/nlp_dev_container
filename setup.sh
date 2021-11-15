@@ -85,7 +85,7 @@ get_cuda_version() {
 
 install_requirements() {
     echo "Installing requirements..."
-    pip install -r requirements.txt
+    pip install -r requirements/requirements-base.txt
     echo "Installation complete."
 }
 
