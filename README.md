@@ -29,6 +29,34 @@ Then reboot.
 
 ## Usage
 
+### Host Usage
+
+```
+    Usage: ./setup.sh [-t VERSION] [--jupyter] [--gpu] [--python3] [-n CONTAINER_NAME]
+
+    Options:
+        -t, --tensorflow-version:
+        -j, --jupyter: Use jupyter lab
+        -g, --gpu: Use gpu
+        -py3, --python3: Force python3 ()
+        -n, --name:  Name to use for the container
+        --skip-setup: Don't run setup script
+        -h, --help
+```
+
+### Container Usage
+
+```
+    Usage: ./setup.sh [--pytorch] [--spacy]
+   
+    Options:
+        -p, --pytorch: Install pytorch
+        -s, --spacy:  Install spacy
+        -h, --help
+
+
+```
+
 ### Starting the container (Host)
 
 On the host machine, start a container with root privileges (needed for installing packages), GPU access, Python 3, and Jupyter lab:
