@@ -118,6 +118,45 @@ install_spacy() {
     echo "Download complete."
 }
 
+setup_container() {
+    upgrade_pip
+    install_requirements
+    install_jupyterlab_vim
+
+    if [[ $INSTALL_SPACY == true ]]; then
+        install_spacy
+    fi
+
+    if [[ $INSTALL_PYTORCH == true ]]; then
+        install_pytorch
+    fi
+}
+
+setup_image() {
+    echo "Building container"
+    TAG=$TF_VERSION
+
+    if [[ $GPU == true ]]; then
+        TAG=${TAG}-gpu
+    fi
+
+    if [[ $JUPYTER == true ]]; then
+        TAG=${TAG}-jupyter
+    fi
+
+    # Build args
+    for opt in "${opts[@]}"; do
+        tensorman_flags+=( --$opt )
+    done
+
+    if [[ $SETUP == false ]]; then
+        echo "Skip setup"
+        command=("bash")
+    fi
+
+    build
+}
+
 build() {
     # Launch the container for building:
     echo "Launching container with tensorflow $TF_VERSION"
@@ -174,38 +213,7 @@ done
 
 # Determine if inside the container or not
 if [ -f /.dockerenv ]; then
-    upgrade_pip
-    install_requirements
-    install_jupyterlab_vim
-
-    if [[ $INSTALL_SPACY == true ]]; then
-        install_spacy
-    fi
-
-    if [[ $INSTALL_PYTORCH == true ]]; then
-        install_pytorch
-    fi
+    setup_container
 else 
-    echo "Building container"
-    TAG=$TF_VERSION
-
-    if [[ $GPU == true ]]; then
-        TAG=${TAG}-gpu
-    fi
-
-    if [[ $JUPYTER == true ]]; then
-        TAG=${TAG}-jupyter
-    fi
-
-    # Build args
-    for opt in "${opts[@]}"; do
-        tensorman_flags+=( --$opt )
-    done
-
-    if [[ $SETUP == false ]]; then
-        echo "Skip setup"
-        command=("bash")
-    fi
-
-    build
+    setup_image
 fi
