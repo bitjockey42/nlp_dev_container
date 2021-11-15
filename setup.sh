@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-#
-# Script to create a docker image
-# This should be run on the host computer
-##########################################
 JUPYTER=false
 GPU=false
 TF_VERSION=2.6.1
@@ -19,14 +15,16 @@ command=( $0 )
 host_usage() {
     cat <<USAGE
 
-    Usage: $0 [-t TENSORFLOW_VERSION] [--jupyter] [--gpu] [-n CONTAINER_NAME]
+    Usage: $0 [-t VERSION] [--jupyter] [--gpu] [--python3] [-n CONTAINER_NAME]
 
     Options:
         -t, --tensorflow-version:
         -j, --jupyter: Use jupyter lab
         -g, --gpu: Use gpu
+        -py3, --python3: Force python3 ()
         -n, --name:  Name to use for the container
         --skip-setup: Don't run setup script
+        -h, --help
 
 USAGE
     exit 1
@@ -40,6 +38,7 @@ container_usage() {
     Options:
         -p, --pytorch: Install pytorch
         -s, --spacy:  Install spacy
+        -h, --help
 
 USAGE
     exit 1
@@ -130,6 +129,17 @@ setup_container() {
     if [[ $INSTALL_PYTORCH == true ]]; then
         install_pytorch
     fi
+
+    verify_tensorflow
+}
+
+verify_tensorflow() {
+    success=$(python -c "import tensorflow as tf; print(tf.test.is_gpu_available())")
+
+    if [[ $success != "True" ]]; then
+        echo "GPU unavailable to tensorflow"
+        exit 1
+    fi
 }
 
 setup_image() {
@@ -166,6 +176,10 @@ build() {
 }
 
 if [ $# -eq 0 ]; then
+    if [ -f /.dockerenv ]; then
+        setup_container
+        exit 0
+    fi
     usage
     exit 1
 fi

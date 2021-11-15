@@ -27,16 +27,24 @@ sudo usermod -aG docker $USER
 
 Then reboot.
 
-## Preparing to create the tensorman image
+## Usage
 
-### Check cuda compatibility
+```
+    Usage: ./setup.sh [-t TENSORFLOW_VERSION] [--jupyter] [--gpu] [-n CONTAINER_NAME]
 
-You'll need to check what cuda version is in the image. To do so, I had to launch a container and check the version inside the container.
+    Options:
+        -t, --tensorflow-version:
+        -j, --jupyter: Use jupyter lab
+        -g, --gpu: Use gpu
+        -n, --name:  Name to use for the container
+        --skip-setup: Don't run setup script
 
-### Creating the tensorman image
+```
 
-```bash
-./create_image.sh
+Example:
+
+```shell
+./setup.sh -t 
 ```
 
 Once that's completed, do this in a new window:
