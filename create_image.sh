@@ -75,6 +75,15 @@ install_pytorch() {
 
     echo "Installing requirements..."
     pip install -r requirements/requirements-pytorch.txt -f "https://download.pytorch.org/whl/cu$cuda_version/torch_stable.html"
+
+    # Check if installed or not
+    success=$(python -c "import torch; print(torch.cuda.is_available())")
+
+    if [[ $success != "True" ]]; then
+        echo "pytorch did not install successfully"
+        exit 1
+    fi
+
     echo "Installation complete."
 }
 
