@@ -8,8 +8,12 @@ GPU=false
 TF_VERSION=2.1.0
 NAME=nlp_dev
 SETUP=true
-opts=("root")
-scripts=("./setup_container.sh")
+INSTALL_PYTORCH=false
+INSTALL_SPACY=false
+INSTALL_JUPYTERLAB_VIM=false
+
+opts=("python3" "root")
+scripts=( $0 )
 
 usage() {
     cat <<USAGE
@@ -19,12 +23,70 @@ usage() {
     Options:
         -t, --tensorflow-version:
         -j, --jupyter: Use jupyter lab
-        -g, --jupyter: Use gpu
+        -g, --gpu: Use gpu
+        -p, --pytorch: Install pytorch
+        -s, --spacy:  Install spacy
         -n, --name:  Name to use for the container
         --skip-setup: Don't run setup script
 
 USAGE
     exit 1
+}
+
+install_node() {
+    # Install node for jupyterlab_vim
+    curl -sL https://deb.nodesource.com/setup_lts.x | bash -
+    apt-get update -y && apt-get install -y nodejs
+    curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+    apt-get update -y && apt-get install -y yarn
+}
+
+install_jupyterlab_vim() {
+    install_node
+    pip install -U jupyterlab_vim
+}
+
+upgrade_pip() {
+    # Update pip
+    echo "Updating pip..."
+    pip install --upgrade pip
+    echo "Update complete."
+}
+
+get_cuda_version() {
+    # Get CUDA version
+    version_string=$(nvcc --version | grep "release" | awk '{print $6}' | cut -c2-)
+    echo $version_string
+    major=$(cut -d'.' -f1 <<< $version_string)
+    minor=$(cut -d'.' -f2 <<< $version_string)
+    cuda_version="${major}${minor}"
+    echo "${major}${minor}"
+}
+
+install_requirements() {
+    echo "Installing requirements..."
+    pip install -r requirements.txt
+    echo "Installation complete."
+}
+
+install_pytorch() {
+    get_cuda_version
+
+    echo "Installing requirements..."
+    pip install -r requirements/requirements-pytorch.txt -f "https://download.pytorch.org/whl/cu$cuda_version/torch_stable.html"
+    echo "Installation complete."
+}
+
+install_spacy() {
+    get_cuda_version
+
+    echo "Installing spacy..."
+    pip install "spacy[cuda$cuda_version]"
+
+    echo "Downloading spacy data..."
+    python -m spacy download en_core_web_lg
+    echo "Download complete."
 }
 
 build() {
@@ -50,6 +112,12 @@ while [ "$1" != "" ]; do
         GPU=true
         opts+=("gpu")
         ;;
+    -p | --pytorch)
+        INSTALL_PYTORCH=true
+        ;;
+    -s | --spacy)
+        INSTALL_SPACY=true
+        ;;
     --skip-setup)
         SETUP=false
         ;;
@@ -72,24 +140,40 @@ while [ "$1" != "" ]; do
     shift
 done
 
-TAG=$TF_VERSION
+# Determine if inside the container or not
+if [ -f /.dockerenv ]; then
+    upgrade_pip
+    install_requirements
+    install_jupyterlab_vim
 
-if [[ $GPU == true ]]; then
-    TAG=${TAG}-gpu
+    if [[ $INSTALL_SPACY == true ]]; then
+        install_spacy
+    fi
+
+    if [[ $INSTALL_PYTORCH == true ]]; then
+        install_pytorch
+    fi
+else 
+    echo "Building container"
+    TAG=$TF_VERSION
+
+    if [[ $GPU == true ]]; then
+        TAG=${TAG}-gpu
+    fi
+
+    if [[ $JUPYTER == true ]]; then
+        TAG=${TAG}-jupyter
+    fi
+
+    # Build args
+    for opt in "${opts[@]}"; do
+        tensorman_flags+=( --$opt )
+    done
+
+    if [[ $SETUP == false ]]; then
+        echo "Skip setup"
+        scripts=("bash")
+    fi
+
+    build
 fi
-
-if [[ $JUPYTER == true ]]; then
-    TAG=${TAG}-jupyter
-fi
-
-# Build args
-for opt in "${opts[@]}"; do
-    tensorman_flags+=( --$opt )
-done
-
-if [[ $SETUP == false ]]; then
-    echo "Skip setup"
-    scripts=("bash")
-fi
-
-build
