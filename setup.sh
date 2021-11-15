@@ -178,7 +178,7 @@ build() {
 if [ $# -eq 0 ]; then
     if [ -f /.dockerenv ]; then
         setup_container
-        exit 0
+        exec $SHELL
     fi
     usage
     exit 1
