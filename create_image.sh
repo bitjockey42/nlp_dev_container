@@ -13,9 +13,9 @@ INSTALL_SPACY=false
 INSTALL_JUPYTERLAB_VIM=false
 
 opts=("python3" "root")
-scripts=( $0 )
+command=( $0 )
 
-usage() {
+host_usage() {
     cat <<USAGE
 
     Usage: $0 [-t TENSORFLOW_VERSION] [--jupyter] [--gpu] [-n CONTAINER_NAME]
@@ -24,13 +24,32 @@ usage() {
         -t, --tensorflow-version:
         -j, --jupyter: Use jupyter lab
         -g, --gpu: Use gpu
-        -p, --pytorch: Install pytorch
-        -s, --spacy:  Install spacy
         -n, --name:  Name to use for the container
         --skip-setup: Don't run setup script
 
 USAGE
     exit 1
+}
+
+container_usage() {
+    cat <<USAGE
+
+    Usage: $0 [--pytorch] [--spacy]
+   
+    Options:
+        -p, --pytorch: Install pytorch
+        -s, --spacy:  Install spacy
+
+USAGE
+    exit 1
+}
+
+usage() {
+    if [ -f /.dockerenv ]; then
+        container_usage
+    else
+        host_usage
+    fi
 }
 
 install_node() {
@@ -102,7 +121,7 @@ build() {
     # Launch the container for building:
     echo "Launching container with tensorflow $TF_VERSION"
     tensorman pull $TAG
-    tensorman +$TF_VERSION run ${tensorman_flags[@]} --name $NAME ${scripts[@]}
+    tensorman +$TF_VERSION run ${tensorman_flags[@]} --name $NAME ${command[@]}
     echo "You can now exit the container"
 }
 
@@ -181,7 +200,7 @@ else
 
     if [[ $SETUP == false ]]; then
         echo "Skip setup"
-        scripts=("bash")
+        command=("bash")
     fi
 
     build
