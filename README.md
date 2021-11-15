@@ -27,19 +27,29 @@ sudo usermod -aG docker $USER
 
 Then reboot.
 
-## Preparing to create the tensorman image
+## Usage
 
-### Check cuda compatibility
+### Starting the container (Host)
 
-You'll need to check what cuda version is in the image. To do so, I had to launch a container and check the version inside the container.
-
-### Creating the tensorman image
+On the host machine, start a container with GPU access, Python 3, and Jupyter lab:
 
 ```bash
-./create_image.sh
+./setup.sh -j -g -py3 -n nlp_dev
 ```
 
-Once that's completed, do this in a new window:
+### Setup container
+
+Then, inside the container, install base requirements and optionally `pytorch`, `spacy`.
+
+```bash
+# Only install basic requirements
+./setup.sh
+
+# Install pytorch and spacy
+./setup.sh -p -s
+```
+
+Once that's completed, do this in a new terminal window:
 
 ```bash
 tensorman save nlp_dev nlp_dev
