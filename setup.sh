@@ -5,14 +5,15 @@
 ##########################################
 JUPYTER=false
 GPU=false
-TF_VERSION=2.1.0
+TF_VERSION=2.6.1
 NAME=nlp_dev
 SETUP=true
 INSTALL_PYTORCH=false
 INSTALL_SPACY=false
 INSTALL_JUPYTERLAB_VIM=false
 
-opts=("python3" "root")
+# The last version that requires the --python3 is 2.2.3
+opts=("root")
 command=( $0 )
 
 host_usage() {
@@ -139,6 +140,9 @@ while [ "$1" != "" ]; do
     -g | --gpu)
         GPU=true
         opts+=("gpu")
+        ;;
+    -py3 | --python3 )
+        opts+=("python3")
         ;;
     -p | --pytorch)
         INSTALL_PYTORCH=true
