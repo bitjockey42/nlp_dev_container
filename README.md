@@ -29,25 +29,27 @@ Then reboot.
 
 ## Usage
 
-```
-    Usage: ./setup.sh [-t TENSORFLOW_VERSION] [--jupyter] [--gpu] [-n CONTAINER_NAME]
+### Starting the container
 
-    Options:
-        -t, --tensorflow-version:
-        -j, --jupyter: Use jupyter lab
-        -g, --gpu: Use gpu
-        -n, --name:  Name to use for the container
-        --skip-setup: Don't run setup script
+For a container with GPU access, Python 3, and Jupyter lab:
 
+```bash
+./setup.sh -j -g -py3 -n nlp_dev
 ```
 
-Example:
+### Setup container
 
-```shell
-./setup.sh -t 
+Then, inside the container, install base requirements and optionally `pytorch`, `spacy`.
+
+```bash
+# Only install basic requirements
+./setup.sh
+
+# Install pytorch and spacy
+./setup.sh -p -s
 ```
 
-Once that's completed, do this in a new window:
+Once that's completed, do this in a new terminal window:
 
 ```bash
 tensorman save nlp_dev nlp_dev
