@@ -19,6 +19,7 @@ usage() {
     Options:
         -t, --tensorflow-version:
         -j, --jupyter: Use jupyter lab
+        -g, --jupyter: Use gpu
         -n, --name:  Name to use for the container
         --skip-setup: Don't run setup script
 
