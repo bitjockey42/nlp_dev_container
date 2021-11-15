@@ -31,10 +31,13 @@ Then reboot.
 
 ### Starting the container (Host)
 
-On the host machine, start a container with GPU access, Python 3, and Jupyter lab:
+On the host machine, start a container with root privileges (needed for installing packages), GPU access, Python 3, and Jupyter lab:
 
 ```bash
-./setup.sh -j -g -py3 -n nlp_dev
+./setup.sh -j -g -n nlp_dev
+
+# you can also specify a tensorflow version
+./setup.sh -t 2.1.0 -j -g -py3 -n nlp_dev
 ```
 
 ### Setup container
