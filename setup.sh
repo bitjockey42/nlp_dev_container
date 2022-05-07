@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 JUPYTER=false
 GPU=false
-TF_VERSION=2.6.1
+TF_VERSION=latest
 NAME=nlp_dev
 SETUP=true
 INSTALL_PYTORCH=false
 INSTALL_SPACY=false
-INSTALL_JUPYTERLAB_VIM=false
+INSTALL_JUPYTERLAB_VIM=true
 
 # The last version that requires the --python3 is 2.2.3
 opts=("root")
@@ -86,6 +86,7 @@ get_cuda_version() {
 install_requirements() {
     echo "Installing requirements..."
     pip install -r requirements/requirements-base.txt
+    pip install -r requirements/requirements-huggingface.txt
     echo "Installation complete."
 }
 

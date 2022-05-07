@@ -19,6 +19,21 @@ sudo apt install tensorman
 sudo apt install nvidia-container-runtime
 ```
 
+**For Pop!_OS 21.10 and later:**
+```
+sudo apt install nvidia-docker2
+```
+
+**For Pop!_OS 20.04:**
+```
+sudo apt install nvidia-container-runtime
+```
+
+**Install driver**
+```
+sudo apt install nvidia-driver-510
+```
+
 Then add yourself to the docker group:
 
 ```
